@@ -11,11 +11,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function DialogDemo() {
+export function SidebarPopup() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap rounded-lg border border-gray-700 p-3">
+          Your text that might be very long and should be truncated with
+          ellipsis
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

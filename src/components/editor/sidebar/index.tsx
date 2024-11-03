@@ -4,9 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import SidebarFormFields from "./sidebar-form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import SidebarAccordionBody from "./sidebar-accordion-body";
 
 export default function Sidebar() {
   const [numberOfItems, setNumberOfItems] = useState(5);
@@ -17,11 +17,11 @@ export default function Sidebar() {
           .fill(null)
           .map((pageNum, index) => (
             <AccordionItem value={`page-${index + 1}`} key={index + 1}>
-              <AccordionTrigger className="hover:bg-muted/50 px-4 py-2">
+              <AccordionTrigger className="hover:bg-muted/50 px-4 py-2 font-semibold">
                 Page {index + 1}
               </AccordionTrigger>
               <AccordionContent className="px-4 py-2">
-                <SidebarFormFields />
+                <SidebarAccordionBody />
               </AccordionContent>
               {/* Accordion content will likely read the contents of the array */}
             </AccordionItem>
