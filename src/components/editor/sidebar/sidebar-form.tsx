@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { DialogDemo } from "./popup";
 
-const FormFields = () => {
+const SidebarFormFields = () => {
   const form = useForm();
 
   const onSubmit = (data) => {
@@ -21,6 +21,8 @@ const FormFields = () => {
   //   TODO @EUAN: Change labels for these
   return (
     <Form {...form}>
+      <DialogDemo />
+      <DialogDemo />
       <DialogDemo />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
@@ -71,4 +73,4 @@ const FormFields = () => {
   );
 };
 
-export default FormFields;
+export default SidebarFormFields;

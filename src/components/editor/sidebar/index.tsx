@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import FormFields from "./form";
+import SidebarFormFields from "./sidebar-form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -21,7 +21,7 @@ export default function Sidebar() {
                 Page {index + 1}
               </AccordionTrigger>
               <AccordionContent className="px-4 py-2">
-                <FormFields />
+                <SidebarFormFields />
               </AccordionContent>
               {/* Accordion content will likely read the contents of the array */}
             </AccordionItem>
