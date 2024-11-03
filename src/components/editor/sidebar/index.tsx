@@ -36,6 +36,7 @@ export default function Sidebar() {
             setNumberOfItems(numberOfItems + 1);
           }}
         >
+          {/* This should create a new accordion item */}
           <p className="text-l">+ New Page</p>
         </Button>
       </div>

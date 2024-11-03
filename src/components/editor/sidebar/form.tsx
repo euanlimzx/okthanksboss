@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { DialogDemo } from "./popup";
 
 const FormFields = () => {
   const form = useForm();
@@ -17,9 +18,10 @@ const FormFields = () => {
   const onSubmit = (data) => {
     console.log(data);
   };
-
+  //   TODO @EUAN: Change labels for these
   return (
     <Form {...form}>
+      <DialogDemo />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
