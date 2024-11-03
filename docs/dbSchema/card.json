@@ -1,0 +1,23 @@
+{
+  "cardId": 456,
+  "ownerId": 123,
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageName": "page name",
+      "pageFeatures": [
+        {
+          "featureType": "text / image / header / spotify playlist url / custom component (fan, carousell)",
+          "imageUrls": [
+            "if its image the array has one entry only",
+            "if its collage / carousell / fan, there will be many entries"
+          ],
+          "textContent": "only if text / header",
+          "textColor": "only if text / header",
+          "featureOrder": "1 / 2 / 3"
+        }
+      ],
+      "pageColor": "probably an enum"
+    }
+  ]
+}
