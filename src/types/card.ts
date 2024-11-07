@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 
 export interface Card {
   _id: ObjectId;
-  ownerId: ObjectId;
+  userId: ObjectId;
   pages: Page[];
 }
 
