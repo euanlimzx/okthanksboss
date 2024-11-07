@@ -5,7 +5,6 @@ export type PageFeature =
 
 export interface BaseFeature {
   featureType: FeatureType;
-  featureOrder: number;
 }
 
 export interface TextFeature extends BaseFeature {
@@ -26,7 +25,7 @@ export interface SpotifyPlaylistUrlFeature extends BaseFeature {
   playlistUrl: string;
 }
 
-enum FeatureType {
+export enum FeatureType {
   SpotifyPlaylistUrl = "spotifyPlaylistUrl",
   Image = "image",
   Text = "text",
