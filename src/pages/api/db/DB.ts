@@ -8,13 +8,13 @@ export abstract class DB {
   abstract getCard(cardIdString: string): Promise<Card | null>;
 
   // returns the id of the new card that you are creating
-  abstract createCard(userIdString: string): Promise<Card | null>;
+  abstract createCard(newCard: Card): Promise<Card | null>;
 
   // returns the card with the changes implemented
   // will need to implement some kind of diff checker to only update the fields -> not sure if mongoDB does this already
   abstract updateCard(
     cardIdString: string,
-    cardData: Card,
+    updatedCard: Card,
   ): Promise<Card | null>;
 
   // returns the deleted card

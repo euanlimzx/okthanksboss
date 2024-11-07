@@ -71,6 +71,68 @@ export class MongoDB extends DB {
     }
   }
 
+  async createCard(newCard: Card): Promise<Card | null> {
+    try {
+      await this._connect();
+      if (!this.cardCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      // addded as unknown here because IDK how to resolve this TS error ew
+      const createdCard = (await this.cardCollection.insertOne(
+        newCard,
+      )) as unknown as Card;
+      return createdCard;
+    } catch (err) {
+      console.error("Error creating card: ", err);
+      return null;
+    }
+  }
+
+  async updateCard(
+    cardIdString: string,
+    updatedCard: Card,
+  ): Promise<Card | null> {
+    const cardId = new ObjectId(cardIdString);
+
+    try {
+      await this._connect();
+      if (!this.cardCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      // addded as unknown here because IDK how to resolve this TS error ew
+      const createdCard = (await this.cardCollection.updateOne(
+        cardId,
+        updatedCard,
+      )) as unknown as Card;
+      return createdCard;
+    } catch (err) {
+      console.error("Error updating card with card id: ", cardIdString, err);
+      return null;
+    }
+  }
+
+  async deleteCard(cardIdString: string): Promise<Card | null> {
+    const cardId = new ObjectId(cardIdString);
+
+    try {
+      await this._connect();
+      if (!this.cardCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      // addded as unknown here because IDK how to resolve this TS error ew
+      const deletedCard = (await this.cardCollection.deleteOne(
+        cardId,
+      )) as unknown as Card;
+      return deletedCard;
+    } catch (err) {
+      console.error("Error deleting card with id: ", cardIdString, err);
+      return null;
+    }
+  }
+
   async getUser(userIdString: string): Promise<User | null> {
     const userId = new ObjectId(userIdString);
 
