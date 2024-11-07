@@ -9,6 +9,6 @@ export interface Card {
 
 export interface Page {
   pageNumber: number;
-  pageFeatures: PageFeature[];
-  pageColor: string;
+  pageFeatures?: PageFeature[];
+  pageColor?: string;
 }
