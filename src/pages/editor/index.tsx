@@ -1,5 +1,5 @@
 import Sidebar from "@/components/editor/sidebar";
-import { Card, Page } from "@/types/card";
+import { Card } from "@/types/card";
 import { useEffect, useState } from "react";
 import { fakeCardData } from "@/docs/dbSchema/card";
 

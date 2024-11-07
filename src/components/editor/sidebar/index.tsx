@@ -5,13 +5,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import SidebarAccordionBody from "./sidebar-accordion-body";
 import { Card, Page } from "@/types/card";
 
 export default function Sidebar({
   card,
-  setCard,
   newPage,
 }: {
   card: Card;
