@@ -13,8 +13,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  await db.establishConnection();
-  const result = await db.test();
+  const result = await db.getCards();
   console.log(result);
   res.status(200).json({ name: "Hello Works" });
 }

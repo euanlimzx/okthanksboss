@@ -4,6 +4,8 @@ import { Card } from "@/types/card";
 export abstract class DB<ObjectIdType> {
   abstract getUser(id: ObjectIdType): User;
 
+  abstract getCards(): Card[];
+
   // TODO @Shawn: Not sure if this function would have to change based on if you are getting the card for viewing / editing -> As of now I dont think so
   abstract getCard(id: ObjectIdType): Card;
 
