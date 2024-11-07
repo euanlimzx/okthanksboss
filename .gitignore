@@ -38,3 +38,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ignore google service accounts credentials
+src/pages/api/services/imageStore/keys.json
