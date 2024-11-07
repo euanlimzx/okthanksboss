@@ -1,8 +1,9 @@
 import { User } from "@/types/user";
+import { Card } from "@/types/card";
 import { ObjectId, MongoClient, Collection } from "mongodb";
 import { DB } from "./DB";
 
-export class MongoDB {
+export class MongoDB extends DB {
   client: MongoClient | null = null;
   cardCollection: Collection | null = null;
   userCollection: Collection | null = null;
@@ -28,11 +29,62 @@ export class MongoDB {
       .collection("User")!;
   }
 
-  async getCards() {
+  async getCards(userIdString: string): Promise<Card[]> {
     // TODO @SW: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
     // create a proxy object that automates the calling of the connect function before each function call, but I think there is no need for that for now
-    await this._connect();
-    return this.cardCollection?.find({}).toArray();
+    const userId = new ObjectId(userIdString);
+
+    try {
+      await this._connect();
+      if (!this.cardCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      const cards = (await this.cardCollection
+        .find(userId)
+        .toArray()) as Card[];
+      return cards;
+    } catch (err) {
+      console.error(
+        "Error fetching all the cards belonging to user: ",
+        userIdString,
+        err,
+      );
+      return [];
+    }
   }
-  // getUser(id: ObjectId): User {}
+
+  async getCard(cardIdString: string): Promise<Card | null> {
+    const cardId = new ObjectId(cardIdString);
+
+    try {
+      await this._connect();
+      if (!this.cardCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      const card = (await this.cardCollection.findOne(cardId)) as Card;
+      return card;
+    } catch (err) {
+      console.error("Error fetching card: ", cardIdString, err);
+      return null;
+    }
+  }
+
+  async getUser(userIdString: string): Promise<User | null> {
+    const userId = new ObjectId(userIdString);
+
+    try {
+      await this._connect();
+      if (!this.userCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      const user = (await this.userCollection.findOne(userId)) as User;
+      return user;
+    } catch (err) {
+      console.error("Error finding a user with id: ", userIdString, err);
+      return null;
+    }
+  }
 }
