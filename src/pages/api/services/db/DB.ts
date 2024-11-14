@@ -2,10 +2,10 @@ import { User } from "@/types/user";
 import { Card } from "@/types/card";
 
 abstract class DB {
-  abstract getCards(userIdString: string): Promise<Card[]>;
+  abstract getAllCardsForUser(userIdString: string): Promise<Card[]>;
 
   // TODO @Shawn: Not sure if this function would have to change based on if you are getting the card for viewing / editing -> As of now I dont think so
-  abstract getCard(cardIdString: string): Promise<Card | null>;
+  abstract getCardForUser(cardIdString: string): Promise<Card | null>;
 
   // returns the id of the new card that you are creating
   abstract createCard(newCard: Card): Promise<Card | null>;
