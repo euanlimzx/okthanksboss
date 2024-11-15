@@ -1,3 +1,4 @@
+//UI COMPONENT
 import {
   Accordion,
   AccordionContent,
@@ -7,19 +8,23 @@ import {
 import { Button } from "@/components/ui/button";
 import SidebarAccordionBody from "./sidebar-accordion-body";
 import { Card, Page } from "@/types/card";
+import { FeatureType } from "@/types/pageFeatures";
 
 export default function Sidebar({
   card,
   newPage,
+  updateCardOnPageUpdate,
 }: {
   card: Card;
-  setCard: React.Dispatch<React.SetStateAction<Card>>;
   newPage: VoidFunction;
+  updateCardOnPageUpdate: (pageNumber: number, updatedPage: Page) => void;
 }) {
   function AccordionItemTitleText(page: Page) {
-    if ("pageFeatures" in page) {
-      return "Feature Type";
-      //TODO @EUAN make sure this displays the actual feature content
+    if (page.pageFeatures) {
+      const features = page.pageFeatures;
+      const DominantFeatureType = "Alleged Non-Blank Page";
+      //TODO @Euan: Order of Dominance: Image -> Asset -> Header -> Body
+      return DominantFeatureType;
     } else {
       return "Blank Page";
     }
@@ -34,7 +39,10 @@ export default function Sidebar({
                 {AccordionItemTitleText(page)}
               </AccordionTrigger>
               <AccordionContent className="px-4 py-2">
-                <SidebarAccordionBody page={page} />
+                <SidebarAccordionBody
+                  page={page}
+                  updateCardOnPageUpdate={updateCardOnPageUpdate}
+                />
               </AccordionContent>
             </AccordionItem>
           ))}

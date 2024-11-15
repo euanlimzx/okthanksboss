@@ -9,6 +9,7 @@ export interface Card {
 
 export interface Page {
   pageNumber: number;
-  pageFeatures?: PageFeature[];
+  pageFeatures: PageFeature[];
+  //made pageFeatures a compulsory field, when I create a blank page I'll supply an empty list
   pageColor?: string;
 }

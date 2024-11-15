@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { BaseFeature, TextFeature } from "@/types/pageFeatures";
 
 export function PopupHeader({
@@ -16,16 +17,23 @@ export function PopupHeader({
 }: {
   feature: TextFeature | BaseFeature;
 }) {
+  function showTextContent(feature: TextFeature | BaseFeature) {
+    if ("textContent" in feature && feature.textContent.length != 0) {
+      return feature.textContent;
+    } else {
+      return "";
+    }
+  }
   return (
     <Dialog>
       <DialogTrigger asChild>
         <div>
-          <span className="pb-10 text-lg">Header</span>
-          <div className="min-h-12 overflow-hidden text-ellipsis whitespace-nowrap rounded-lg border border-gray-700 p-3">
+          <span className="text-lg">Header</span>
+          <div className="mt-2 min-h-12 overflow-hidden text-ellipsis whitespace-nowrap rounded-lg border border-gray-700 p-3">
             {"textContent" in feature && feature.textContent.length != 0 ? (
               feature.textContent
             ) : (
-              <span className="text-gray-300">Enter a header</span>
+              <span className="text-gray-400">Enter your header</span>
             )}
           </div>
         </div>
@@ -37,9 +45,8 @@ export function PopupHeader({
             This will appear in big big text :D
           </DialogDescription>
         </DialogHeader>
-        {/* TODO @EUAN: Fucking fix this */}
         <div className="grid gap-4">
-          <Input id="name" value="Pedro Duarte" className="col-span-3" />
+          <Textarea className="text-black" />
         </div>
         <DialogFooter>
           <Button type="submit">Save changes</Button>
