@@ -19,6 +19,7 @@ export default function Index() {
       if (!prevCard) return prevCard; // Handle case where prevCard might be null/undefined.
       const newPage = {
         pageNumber: prevCard.pages.length + 1,
+        pageFeatures: [],
       };
       // Create a new copy of card with the updated pages array
       return {
@@ -42,6 +43,8 @@ export default function Index() {
   };
 
   //TODO @EUAN function that includs adding new features to new Page very nicely
+  // This function needs to prevent users from adding features if shit is already "filled up"
+  // We might also need a deletion feature
   return (
     <Sidebar
       card={card}

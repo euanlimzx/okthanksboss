@@ -39,7 +39,10 @@ export default function Sidebar({
                 {AccordionItemTitleText(page)}
               </AccordionTrigger>
               <AccordionContent className="px-4 py-2">
-                <SidebarAccordionBody page={page} />
+                <SidebarAccordionBody
+                  page={page}
+                  updateCardOnPageUpdate={updateCardOnPageUpdate}
+                />
               </AccordionContent>
             </AccordionItem>
           ))}
