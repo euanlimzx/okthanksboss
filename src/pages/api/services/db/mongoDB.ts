@@ -1,9 +1,9 @@
 import { User } from "@/types/user";
 import { Card } from "@/types/card";
 import { ObjectId, MongoClient, Collection } from "mongodb";
-import { DB } from "./DB";
+import DB from "./DB";
 
-export class MongoDB extends DB {
+class MongoDB extends DB {
   client: MongoClient | null = null;
   cardCollection: Collection | null = null;
   userCollection: Collection | null = null;
@@ -29,7 +29,7 @@ export class MongoDB extends DB {
       .collection("User")!;
   }
 
-  async getCards(userIdString: string): Promise<Card[]> {
+  async getAllCardsForUser(userIdString: string): Promise<Card[]> {
     // TODO @SW: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
     // create a proxy object that automates the calling of the connect function before each function call, but I think there is no need for that for now
     const userId = new ObjectId(userIdString);
@@ -41,7 +41,7 @@ export class MongoDB extends DB {
       }
 
       const cards = (await this.cardCollection
-        .find(userId)
+        .find({ userId })
         .toArray()) as Card[];
       return cards;
     } catch (err) {
@@ -54,7 +54,7 @@ export class MongoDB extends DB {
     }
   }
 
-  async getCard(cardIdString: string): Promise<Card | null> {
+  async getCardForUser(cardIdString: string): Promise<Card | null> {
     const cardId = new ObjectId(cardIdString);
 
     try {
@@ -150,3 +150,5 @@ export class MongoDB extends DB {
     }
   }
 }
+
+export default MongoDB;
