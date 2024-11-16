@@ -54,7 +54,7 @@ class MongoDB extends DB {
     }
   }
 
-  async getCardForUser(cardIdString: string): Promise<Card | null> {
+  async getCard(cardIdString: string): Promise<Card | null> {
     const cardId = new ObjectId(cardIdString);
 
     try {
