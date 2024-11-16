@@ -8,7 +8,6 @@ import {
 import { Button } from "@/components/ui/button";
 import SidebarAccordionBody from "./sidebar-accordion-body";
 import { Card, Page } from "@/types/card";
-import { FeatureType } from "@/types/pageFeatures";
 
 export default function Sidebar({
   card,
@@ -21,7 +20,7 @@ export default function Sidebar({
 }) {
   function AccordionItemTitleText(page: Page) {
     if (page.pageFeatures) {
-      const features = page.pageFeatures;
+      // const features = page.pageFeatures;
       const DominantFeatureType = "Alleged Non-Blank Page";
       //TODO @Euan: Order of Dominance: Image -> Asset -> Header -> Body
       return DominantFeatureType;

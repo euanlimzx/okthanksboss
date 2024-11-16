@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { BaseFeature, TextFeature } from "@/types/pageFeatures";
 
@@ -17,13 +16,13 @@ export function PopupHeader({
 }: {
   feature: TextFeature | BaseFeature;
 }) {
-  function showTextContent(feature: TextFeature | BaseFeature) {
-    if ("textContent" in feature && feature.textContent.length != 0) {
-      return feature.textContent;
-    } else {
-      return "";
-    }
-  }
+  // function showTextContent(feature: TextFeature | BaseFeature) {
+  //   if ("textContent" in feature && feature.textContent.length != 0) {
+  //     return feature.textContent;
+  //   } else {
+  //     return "";
+  //   }
+  // }
   return (
     <Dialog>
       <DialogTrigger asChild>
