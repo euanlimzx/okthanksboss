@@ -12,14 +12,15 @@ const db: DB = new MongoDB();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Card[] | ErrorResponse>,
+  res: NextApiResponse<Card | null | ErrorResponse>,
 ) {
   const fullUrl = new URL(
     `http://${process.env.HOST ?? "localhost"}${req.url}`,
   );
-  const userIdString = req.query.userIdString as string | undefined;
 
-  if (!userIdString) {
+  const { cardIdString } = req.query;
+
+  if (!cardIdString) {
     return res.status(400).json({
       error: true,
       errorMessage: "Missing required arguments",
@@ -27,16 +28,15 @@ export default async function handler(
       route: fullUrl,
     });
   }
-
   try {
-    const allCards = await db.getAllCardsForUser(userIdString);
-    return res.status(200).json(allCards);
+    const card = await db.getCard(cardIdString as string);
+    return res.status(200).json(card);
   } catch (err) {
     // this is to catch a BSON Parsing error
     if (err instanceof BSON.BSONError)
       return res.status(404).json({
         error: true,
-        errorMessage: `userId: ${userIdString} not found`,
+        errorMessage: `cardId: ${cardIdString} not found`,
         params: req.query,
         route: fullUrl,
       });

@@ -1,4 +1,4 @@
-export type RouteArguments = { [k: string]: string };
+export type RouteArguments = { [k: string]: string | string[] | undefined };
 
 export interface ErrorResponse {
   error: boolean;
