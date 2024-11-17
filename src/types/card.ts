@@ -1,15 +1,20 @@
-import { PageFeature } from "./pageFeatures";
+import { zodPageFeature } from "./pageFeatures";
 import { ObjectId } from "mongodb";
+import { z } from "zod";
 
-export interface Card {
-  _id: ObjectId;
-  userId: ObjectId;
-  pages: Page[];
-}
-
-export interface Page {
-  pageNumber: number;
-  pageFeatures: PageFeature[];
+export const zodPage = z.object({
+  pageNumber: z.number(),
+  pageFeatures: z.array(zodPageFeature),
   //made pageFeatures a compulsory field, when I create a blank page I'll supply an empty list
-  pageColor?: string;
-}
+  pageColor: z.union([z.string(), z.undefined()]),
+});
+
+export type Page = z.infer<typeof zodPage>;
+
+export const zodCard = z.object({
+  _id: z.instanceof(ObjectId),
+  userId: z.instanceof(ObjectId),
+  pages: z.array(zodPage),
+});
+
+export type Card = z.infer<typeof zodCard>;

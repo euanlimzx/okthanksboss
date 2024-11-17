@@ -1,8 +1,17 @@
-export type RouteArguments = { [k: string]: string | string[] | undefined };
+import { z } from "zod";
 
-export interface ErrorResponse {
-  error: boolean;
-  errorMessage: string;
-  params?: RouteArguments;
-  route: URL;
-}
+export const zodRouteArguments = z.record(
+  z.string(),
+  z.union([z.string(), z.array(z.string()), z.undefined()]),
+);
+
+export type RouteArguments = z.infer<typeof zodRouteArguments>;
+
+export const zodErrorResponse = z.object({
+  error: z.boolean(),
+  errorMessage: z.string(),
+  params: zodRouteArguments,
+  route: z.string().url(),
+});
+
+export type ErrorResponse = z.infer<typeof zodErrorResponse>;

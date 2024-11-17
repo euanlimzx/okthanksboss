@@ -14,9 +14,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Card | null | ErrorResponse>,
 ) {
-  const fullUrl = new URL(
-    `http://${process.env.HOST ?? "localhost"}${req.url}`,
-  );
+  const fullUrl = `http://${process.env.HOST ?? "localhost"}${req.url}`;
 
   const { cardIdString } = req.query;
 
