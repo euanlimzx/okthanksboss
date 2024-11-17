@@ -10,6 +10,11 @@ export default function Index() {
     setCard(fakeCardData);
     //TODO @EUAN settle typescript errors
   }, []);
+
+  useEffect(() => {
+    console.log(card);
+  }, [card]);
+
   if (!card) {
     return <div>This card could not be found.</div>;
   }
