@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import MongoDB from "../services/db/mongoDB";
 import DB from "../services/db/DB";
-import { Card } from "@/types/card";
+import { zodCard, Card } from "@/types/card";
 import { ErrorResponse } from "@/types/apiError";
+import { ZodError } from "zod";
 
 // for now I am creating a new instance of the DB everytime, but its reusing the same connection
 // not sure if this is the best way to be doing this honestly
@@ -14,28 +15,23 @@ export default async function handler(
   res: NextApiResponse<Card | null | ErrorResponse>,
 ) {
   if (req.method === "POST") {
-    const fullUrl = new URL(
-      `http://${process.env.HOST ?? "localhost"}${req.url}`,
-    );
-
-    // should I do some JSON validation here
-    const card = req.body;
-
-    // checks if the object is empty
-    if (Object.keys(card).length === 0) {
-      return res.status(400).json({
-        error: true,
-        errorMessage: "Missing required arguments",
-        params: req.body,
-        route: fullUrl,
-      });
-    }
+    const fullUrl = `http://${process.env.HOST ?? "localhost"}${req.url}`;
 
     try {
+      const card = zodCard.parse(req.body);
       const createdCard = await db.createCard(card);
       return res.status(201).json(createdCard);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
+      if (e instanceof ZodError) {
+        return res.status(400).json({
+          error: true,
+          errorMessage: "Missing required arguments",
+          params: req.body,
+          route: fullUrl,
+        });
+      }
+
       return res.status(500).json({
         error: true,
         errorMessage: `Internal server error`,
