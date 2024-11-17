@@ -1,6 +1,6 @@
 //Logic Component
 import { Page } from "@/types/card";
-import { FeatureType, BaseFeature, PageFeature } from "@/types/pageFeatures";
+import { PageFeature } from "@/types/pageFeatures";
 import AccordionFeature from "./accordion-feature";
 
 export default function SidebarAccordionBody({
@@ -16,27 +16,9 @@ export default function SidebarAccordionBody({
   //Edge case => we will need to pre-provide features that does not exist yet, but this cannot affect the actual order of stuffs.
   //rerun the rendering of features every time we add, remove, or re-order features
   //handle drag and drog, handle saving etc.
-  function renderUnitializedFeatures(page: Page) {
-    const presentPageFeatures = page.pageFeatures ?? [];
-    const missing: BaseFeature[] = [];
-    // Create a set of the feature types already present in the pageFeatures array
-    const presentFeatureTypes = new Set(
-      presentPageFeatures?.map((feature) => feature.featureType),
-    );
-
-    // Loop through all possible feature types and check if each one is missing
-    for (const feature of Object.values(FeatureType)) {
-      if (!presentFeatureTypes.has(feature)) {
-        missing.push({
-          featureType: feature,
-        }); // Add missing feature type to the missing array
-      }
-    }
-    return missing;
-  }
 
   //given any featureType object, update state
-  function updatePageOnFeatureUpdate(newFeature: PageFeature) {
+  function updateCardOnFeatureUpdate(newFeature: PageFeature) {
     //No idea why this is a problem, I'm clearly reassigning newFeatures[i]
     // eslint-disable-next-line prefer-const
     let newPageFeatures = [...page.pageFeatures];
@@ -62,14 +44,14 @@ export default function SidebarAccordionBody({
     <div className="space-y-10 pb-10">
       {page.pageFeatures &&
         page.pageFeatures.map((feature, index) => {
-          return <AccordionFeature feature={feature} key={index} />;
+          return (
+            <AccordionFeature
+              feature={feature}
+              key={index}
+              updateCardOnFeatureUpdate={updateCardOnFeatureUpdate}
+            />
+          );
         })}
-
-      {/* Everything below here cannot have draggable handles */}
-      <div>MISSING:</div>
-      {renderUnitializedFeatures(page).map((feature, index) => {
-        return <AccordionFeature feature={feature} key={index} />;
-      })}
     </div>
   );
 }

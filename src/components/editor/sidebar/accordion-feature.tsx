@@ -1,16 +1,24 @@
-import { BaseFeature, FeatureType, PageFeature } from "@/types/pageFeatures";
-import { PopupHeader } from "./popup-header";
+//logic component
+import { PageFeature, zodFeatureType } from "@/types/pageFeatures";
+import { HeaderEditor } from "./header-editor";
 
 export default function AccordionFeature({
   feature,
+  updateCardOnFeatureUpdate,
 }: {
-  feature: PageFeature | BaseFeature;
+  feature: PageFeature;
+  updateCardOnFeatureUpdate: (newFeature: PageFeature) => void;
 }) {
-  if (feature.featureType == FeatureType.Text) {
-    return <PopupHeader feature={feature} />;
-  } else if (feature.featureType == FeatureType.Image) {
+  if (feature.featureType == zodFeatureType.enum.text) {
+    return (
+      <HeaderEditor
+        feature={feature}
+        updateCardOnFeatureUpdate={updateCardOnFeatureUpdate}
+      />
+    );
+  } else if (feature.featureType == zodFeatureType.enum.image) {
     return <div>image</div>;
-  } else if (feature.featureType == FeatureType.SpotifyPlaylistUrl) {
+  } else if (feature.featureType == zodFeatureType.enum.spotifyPlaylistUrl) {
     return <div>spotify</div>;
   }
 }
