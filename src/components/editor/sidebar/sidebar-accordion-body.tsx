@@ -2,13 +2,17 @@
 import { Page } from "@/types/card";
 import { PageFeature } from "@/types/pageFeatures";
 import AccordionFeature from "./accordion-feature";
+import {
+  updateCardOnFeatureUpdate,
+  updateCardOnPageUpdate,
+} from "@/types/editor";
 
 export default function SidebarAccordionBody({
   page,
   updateCardOnPageUpdate,
 }: {
   page: Page;
-  updateCardOnPageUpdate: (pageNumber: number, updatedPage: Page) => void;
+  updateCardOnPageUpdate: updateCardOnPageUpdate;
 }) {
   //pageFeatures is an array that is sorted based on the order we want components to appear in
   //Popup Component conditionally renders different popups based on featureType
@@ -18,7 +22,9 @@ export default function SidebarAccordionBody({
   //handle drag and drog, handle saving etc.
 
   //given any featureType object, update state
-  function updateCardOnFeatureUpdate(newFeature: PageFeature) {
+  const updateCardOnFeatureUpdate: updateCardOnFeatureUpdate = (
+    newFeature: PageFeature,
+  ) => {
     //No idea why this is a problem, I'm clearly reassigning newFeatures[i]
     // eslint-disable-next-line prefer-const
     let newPageFeatures = [...page.pageFeatures];
@@ -39,7 +45,7 @@ export default function SidebarAccordionBody({
       ...page,
       pageFeatures: newPageFeatures,
     });
-  }
+  };
   return (
     <div className="space-y-10 pb-10">
       {page.pageFeatures &&

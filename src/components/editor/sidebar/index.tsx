@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import SidebarAccordionBody from "./sidebar-accordion-body";
 import { Card, Page } from "@/types/card";
+import { updateCardOnPageUpdate } from "@/types/editor";
 
 export default function Sidebar({
   card,
@@ -16,7 +17,7 @@ export default function Sidebar({
 }: {
   card: Card;
   newPage: VoidFunction;
-  updateCardOnPageUpdate: (pageNumber: number, updatedPage: Page) => void;
+  updateCardOnPageUpdate: updateCardOnPageUpdate;
 }) {
   function AccordionItemTitleText(page: Page) {
     if (page.pageFeatures) {

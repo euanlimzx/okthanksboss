@@ -3,6 +3,7 @@ import Sidebar from "@/components/editor/sidebar";
 import { Card, Page } from "@/types/card";
 import { useEffect, useState } from "react";
 import { fakeCardData } from "@/docs/dbSchema/card";
+import { updateCardOnPageUpdate } from "@/types/editor";
 
 export default function Index() {
   const [card, setCard] = useState<Card>();
@@ -34,7 +35,10 @@ export default function Index() {
     });
   }
   //TODO @EUAN How would you like errors to be handled for this?
-  const updateCardOnPageUpdate = (pageNumber: number, updatedPage: Page) => {
+  const updateCardOnPageUpdate: updateCardOnPageUpdate = (
+    pageNumber,
+    updatedPage,
+  ) => {
     setCard((prevCard) => {
       if (!prevCard) return prevCard;
 

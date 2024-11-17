@@ -1,13 +1,14 @@
 //logic component
 import { PageFeature, zodFeatureType } from "@/types/pageFeatures";
 import { HeaderEditor } from "./header-editor";
+import { updateCardOnFeatureUpdate } from "@/types/editor";
 
 export default function AccordionFeature({
   feature,
   updateCardOnFeatureUpdate,
 }: {
   feature: PageFeature;
-  updateCardOnFeatureUpdate: (newFeature: PageFeature) => void;
+  updateCardOnFeatureUpdate: updateCardOnFeatureUpdate;
 }) {
   if (feature.featureType == zodFeatureType.enum.text) {
     return (
