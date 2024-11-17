@@ -1,6 +1,6 @@
 //logic component
 import { PageFeature, zodFeatureType } from "@/types/pageFeatures";
-import { PopupHeader } from "./popup-header";
+import { HeaderEditor } from "./header-editor";
 
 export default function AccordionFeature({
   feature,
@@ -11,7 +11,7 @@ export default function AccordionFeature({
 }) {
   if (feature.featureType == zodFeatureType.enum.text) {
     return (
-      <PopupHeader
+      <HeaderEditor
         feature={feature}
         updateCardOnFeatureUpdate={updateCardOnFeatureUpdate}
       />

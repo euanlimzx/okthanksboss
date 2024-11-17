@@ -1,42 +1,28 @@
 import { Button } from "@/components/ui/button";
+import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { TextFeature } from "@/types/pageFeatures";
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
 } from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import { PageFeature, TextFeature } from "@/types/pageFeatures";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { useEffect, useState } from "react";
+import React from "react";
 
-export function PopupHeader({
+export const HeaderEditorUI = ({
   feature,
-  updateCardOnFeatureUpdate,
+  handleTextAreaChange,
+  submitTextArea,
+  textAreaValue,
 }: {
   feature: TextFeature;
-  updateCardOnFeatureUpdate: (newFeature: PageFeature) => void;
-}) {
-  const [textAreaValue, setTextAreaValue] = useState("");
-
-  useEffect(() => {
-    if ("textContent" in feature && feature.textContent.length != 0) {
-      setTextAreaValue(feature.textContent);
-    } else {
-      setTextAreaValue("");
-    }
-  }, [feature]);
-
-  function handleTextAreaChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setTextAreaValue(event.target.value);
-  }
-
-  function submitTextArea() {
-    updateCardOnFeatureUpdate({ ...feature, textContent: textAreaValue });
-  }
+  handleTextAreaChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+  submitTextArea: VoidFunction;
+  textAreaValue: string;
+}) => {
   return (
     <Dialog
       onOpenChange={(e) => {
@@ -48,7 +34,7 @@ export function PopupHeader({
         <div>
           <span className="text-lg">Header</span>
           <div className="mt-2 min-h-12 overflow-hidden text-ellipsis whitespace-nowrap rounded-lg border border-gray-700 p-3">
-            {feature.textContent.length != 0 ? (
+            {feature.textContent.trim().length != 0 ? (
               feature.textContent
             ) : (
               <span className="text-gray-400">Enter your header</span>
@@ -80,4 +66,4 @@ export function PopupHeader({
       </DialogContent>
     </Dialog>
   );
-}
+};
