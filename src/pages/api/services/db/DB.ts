@@ -20,7 +20,12 @@ abstract class DB {
   // returns the deleted card
   abstract deleteCard(cardIdString: string): Promise<Card | null>;
 
-  abstract getUser(id: string): Promise<User | null>;
+  abstract getUser(userIdString: string): Promise<User | null>;
+
+  abstract addCardToUser(
+    userIdString: string,
+    cardIdString: string,
+  ): Promise<boolean>;
 }
 
 export default DB;

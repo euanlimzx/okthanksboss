@@ -18,6 +18,7 @@ export const zodHeaderFeature = zodBaseFeature.extend({
 export type HeaderFeature = z.infer<typeof zodHeaderFeature>;
 
 export const zodBodyFeature = zodBaseFeature.extend({
+  featureType: z.literal(zodFeatureType.enum.body),
   textContent: z.string().default(""),
   textColor: z.string().default("black"),
 });

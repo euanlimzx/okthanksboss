@@ -6,7 +6,7 @@ import DB from "./DB";
 class MongoDB extends DB {
   client: MongoClient | null = null;
   cardCollection: Collection | null = null;
-  userCollection: Collection | null = null;
+  userCollection: Collection<User> | null = null;
 
   async _connect() {
     // checks if there is already a connection that has been established
@@ -79,10 +79,8 @@ class MongoDB extends DB {
       }
 
       // addded as unknown here because IDK how to resolve this TS error ew
-      const createdCard = (await this.cardCollection.insertOne(
-        newCard,
-      )) as unknown as Card;
-      return createdCard;
+      const createdCard = await this.cardCollection.insertOne(newCard);
+      return { ...newCard, _id: createdCard.insertedId };
     } catch (err) {
       console.error("Error creating card: ", err);
       return null;
@@ -147,6 +145,38 @@ class MongoDB extends DB {
     } catch (err) {
       console.error("Error finding a user with id: ", userIdString, err);
       return null;
+    }
+  }
+
+  async addCardToUser(
+    userIdString: string,
+    cardIdString: string,
+  ): Promise<boolean> {
+    const userId = new ObjectId(userIdString);
+    const cardId = new ObjectId(cardIdString);
+
+    try {
+      await this._connect();
+      if (!this.userCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      await this.userCollection.findOneAndUpdate(
+        { _id: userId },
+        {
+          $push: { createdCards: cardId },
+        },
+      );
+      return true;
+    } catch (err) {
+      console.error(
+        "Error adding card of id: ",
+        cardId,
+        " to user with with id: ",
+        userIdString,
+        err,
+      );
+      return false;
     }
   }
 }

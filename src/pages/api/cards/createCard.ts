@@ -4,6 +4,7 @@ import DB from "../services/db/DB";
 import { zodCard, Card } from "@/types/card";
 import { ErrorResponse } from "@/types/apiError";
 import { ZodError } from "zod";
+import { createEmptyCard } from "@/utils/createEmpty";
 
 // for now I am creating a new instance of the DB everytime, but its reusing the same connection
 // not sure if this is the best way to be doing this honestly
@@ -18,9 +19,28 @@ export default async function handler(
     const fullUrl = `http://${process.env.HOST ?? "localhost"}${req.url}`;
 
     try {
-      const card = zodCard.parse(req.body);
+      // function assumes that the card is empty!
+      const { userIdString } = req.body;
+      const card = zodCard.parse(createEmptyCard(userIdString));
       const createdCard = await db.createCard(card);
+
+      // TODO: add created card's ID to user
+      const cardSuccessfullyAdded = await db.addCardToUser(
+        userIdString,
+        createdCard!._id.toString(),
+      ); // used toString() here for the sake of consistency, may be leading to some performance losses though
+
+      if (!cardSuccessfullyAdded) {
+        return res.status(500).json({
+          error: true,
+          errorMessage: `Internal server error - cannot add card to user`,
+          params: req.query,
+          route: fullUrl,
+        });
+      }
+
       return res.status(201).json(createdCard);
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       if (e instanceof ZodError) {
