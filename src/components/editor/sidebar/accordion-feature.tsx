@@ -1,5 +1,5 @@
 //logic component
-import { FeatureType, PageFeature } from "@/types/pageFeatures";
+import { PageFeature, zodFeatureType } from "@/types/pageFeatures";
 import { PopupHeader } from "./popup-header";
 
 export default function AccordionFeature({
@@ -9,16 +9,16 @@ export default function AccordionFeature({
   feature: PageFeature;
   updateCardOnFeatureUpdate: (newFeature: PageFeature) => void;
 }) {
-  if (feature.featureType == FeatureType.Text) {
+  if (feature.featureType == zodFeatureType.enum.text) {
     return (
       <PopupHeader
         feature={feature}
         updateCardOnFeatureUpdate={updateCardOnFeatureUpdate}
       />
     );
-  } else if (feature.featureType == FeatureType.Image) {
+  } else if (feature.featureType == zodFeatureType.enum.image) {
     return <div>image</div>;
-  } else if (feature.featureType == FeatureType.SpotifyPlaylistUrl) {
+  } else if (feature.featureType == zodFeatureType.enum.spotifyPlaylistUrl) {
     return <div>spotify</div>;
   }
 }
