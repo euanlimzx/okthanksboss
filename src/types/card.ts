@@ -12,8 +12,14 @@ export const zodPage = z.object({
 export type Page = z.infer<typeof zodPage>;
 
 export const zodCard = z.object({
-  _id: z.instanceof(ObjectId),
-  userId: z.instanceof(ObjectId),
+  _id: z.union([
+    z.instanceof(ObjectId),
+    z.string().transform((idString) => new ObjectId(idString)),
+  ]),
+  userId: z.union([
+    z.instanceof(ObjectId),
+    z.string().transform((idString) => new ObjectId(idString)),
+  ]),
   pages: z.array(zodPage),
 });
 

@@ -98,9 +98,15 @@ class MongoDB extends DB {
 
       // addded as unknown here because IDK how to resolve this TS error ew
       const createdCard = (await this.cardCollection.findOneAndUpdate(
-        { _id: cardId },
+        // update the card only if the pages array changes
+        { _id: cardId, $or: [{ pages: { $ne: updatedCard.pages } }] },
         {
-          $set: updatedCard,
+          $set: {
+            pages: updatedCard.pages,
+          },
+        },
+        {
+          returnDocument: "after",
         },
       )) as unknown as Card;
       return createdCard;
