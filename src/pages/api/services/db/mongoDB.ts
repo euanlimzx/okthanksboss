@@ -5,7 +5,7 @@ import DB from "./DB";
 
 class MongoDB extends DB {
   client: MongoClient | null = null;
-  cardCollection: Collection | null = null;
+  cardCollection: Collection<Card> | null = null;
   userCollection: Collection<User> | null = null;
 
   async _connect() {
