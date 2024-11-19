@@ -3,12 +3,12 @@ import MongoDB from "../services/db/mongoDB";
 import DB from "../services/db/DB";
 import { Card } from "@/types/card";
 import { ErrorResponse } from "@/types/apiError";
-import { BSON } from "mongodb";
+import { BSON, InsertOneOptions } from "mongodb";
 
 // for now I am creating a new instance of the DB everytime, but its reusing the same connection
 // not sure if this is the best way to be doing this honestly
 
-const db: DB = new MongoDB();
+const db: DB<InsertOneOptions> = new MongoDB();
 
 export default async function handler(
   req: NextApiRequest,

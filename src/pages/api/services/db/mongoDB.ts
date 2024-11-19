@@ -1,12 +1,19 @@
 import { User } from "@/types/user";
 import { Card } from "@/types/card";
-import { ObjectId, MongoClient, Collection } from "mongodb";
+import {
+  ObjectId,
+  MongoClient,
+  Collection,
+  ClientSession,
+  InsertOneOptions,
+} from "mongodb";
 import DB from "./DB";
 
-class MongoDB extends DB {
+class MongoDB extends DB<InsertOneOptions> {
   client: MongoClient | null = null;
   cardCollection: Collection<Card> | null = null;
   userCollection: Collection<User> | null = null;
+  session: ClientSession | null = null;
 
   async _connect() {
     // checks if there is already a connection that has been established
@@ -71,7 +78,7 @@ class MongoDB extends DB {
     }
   }
 
-  async createCard(newCard: Card): Promise<Card> {
+  async createCard(newCard: Card, options: InsertOneOptions): Promise<Card> {
     try {
       await this._connect();
       if (!this.cardCollection) {
@@ -79,7 +86,7 @@ class MongoDB extends DB {
       }
 
       // addded as unknown here because IDK how to resolve this TS error ew
-      const createdCard = await this.cardCollection.insertOne(newCard);
+      const createdCard = await this.cardCollection.insertOne(newCard, options);
       return { ...newCard, _id: createdCard.insertedId };
     } catch (e) {
       console.error("Error creating card: ", e);
@@ -153,34 +160,54 @@ class MongoDB extends DB {
     }
   }
 
-  async addCardToUser(
+  async createNewCardAndAddToUser(
     userIdString: string,
-    cardIdString: string,
-  ): Promise<void> {
+    newCard: Card,
+  ): Promise<Card> {
     const userId = new ObjectId(userIdString);
-    const cardId = new ObjectId(cardIdString);
 
     try {
       await this._connect();
-      if (!this.userCollection) {
+      if (!this.client || !this.userCollection || !this.cardCollection) {
         throw new Error("Could not connect to the database");
       }
 
-      await this.userCollection.findOneAndUpdate(
-        { _id: userId },
-        {
-          $push: { createdCards: cardId },
-        },
-      );
+      this.session = this.client.startSession();
+      if (!this.session) {
+        throw new Error("Could not establish a DB session");
+      }
+
+      let insertedCard = null;
+
+      await this.session.withTransaction(async () => {
+        insertedCard = await this.createCard(newCard, {
+          session: this.session!,
+        });
+        const updateResult = await this.userCollection?.updateOne(
+          { _id: userId },
+          {
+            $push: { createdCards: insertedCard._id },
+          },
+          {
+            session: this.session!,
+          },
+        );
+
+        if (!updateResult?.modifiedCount) {
+          throw new Error(`Could not find user id: ${userIdString}`);
+        }
+      });
+
+      return insertedCard!;
     } catch (e) {
       console.error(
-        "Error adding card of id: ",
-        cardId,
-        " to user with with id: ",
+        "Error adding new card to user with with id: ",
         userIdString,
         e,
       );
       throw e;
+    } finally {
+      await this.session!.endSession();
     }
   }
 }

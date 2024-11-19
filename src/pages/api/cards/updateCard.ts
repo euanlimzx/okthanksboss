@@ -4,8 +4,9 @@ import DB from "../services/db/DB";
 import { zodCard, Card } from "@/types/card";
 import { ErrorResponse } from "@/types/apiError";
 import { ZodError } from "zod";
+import { InsertOneOptions } from "mongodb";
 
-const db: DB = new MongoDB();
+const db: DB<InsertOneOptions> = new MongoDB();
 
 // https://www.mongodb.com/community/forums/t/update-document-only-if-new-data-differs-from-current-data/139827/4
 // for now I will just implement a simple update -> will try to implement this
