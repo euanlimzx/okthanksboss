@@ -25,19 +25,7 @@ export default async function handler(
       const createdCard = await db.createCard(card);
 
       // TODO: add created card's ID to user
-      const cardSuccessfullyAdded = await db.addCardToUser(
-        userIdString,
-        createdCard!._id.toString(),
-      ); // used toString() here for the sake of consistency, may be leading to some performance losses though
-
-      if (!cardSuccessfullyAdded) {
-        return res.status(500).json({
-          error: true,
-          errorMessage: `Internal server error - cannot add card to user`,
-          params: req.query,
-          route: fullUrl,
-        });
-      }
+      await db.addCardToUser(userIdString, createdCard!._id.toString()); // used toString() here for the sake of consistency, may be leading to some performance losses though
 
       return res.status(201).json(createdCard);
 

@@ -44,17 +44,17 @@ class MongoDB extends DB {
         .find({ userId })
         .toArray()) as Card[];
       return cards;
-    } catch (err) {
+    } catch (e) {
       console.error(
         "Error fetching all the cards belonging to user: ",
         userIdString,
-        err,
+        e,
       );
-      return [];
+      throw e;
     }
   }
 
-  async getCard(cardIdString: string): Promise<Card | null> {
+  async getCard(cardIdString: string): Promise<Card> {
     const cardId = new ObjectId(cardIdString);
 
     try {
@@ -65,13 +65,13 @@ class MongoDB extends DB {
 
       const card = (await this.cardCollection.findOne(cardId)) as Card;
       return card;
-    } catch (err) {
-      console.error("Error fetching card: ", cardIdString, err);
-      return null;
+    } catch (e) {
+      console.error("Error fetching card: ", cardIdString, e);
+      throw e;
     }
   }
 
-  async createCard(newCard: Card): Promise<Card | null> {
+  async createCard(newCard: Card): Promise<Card> {
     try {
       await this._connect();
       if (!this.cardCollection) {
@@ -81,16 +81,13 @@ class MongoDB extends DB {
       // addded as unknown here because IDK how to resolve this TS error ew
       const createdCard = await this.cardCollection.insertOne(newCard);
       return { ...newCard, _id: createdCard.insertedId };
-    } catch (err) {
-      console.error("Error creating card: ", err);
-      return null;
+    } catch (e) {
+      console.error("Error creating card: ", e);
+      throw e;
     }
   }
 
-  async updateCard(
-    cardIdString: string,
-    updatedCard: Card,
-  ): Promise<Card | null> {
+  async updateCard(cardIdString: string, updatedCard: Card): Promise<Card> {
     const cardId = new ObjectId(cardIdString);
 
     try {
@@ -100,18 +97,20 @@ class MongoDB extends DB {
       }
 
       // addded as unknown here because IDK how to resolve this TS error ew
-      const createdCard = (await this.cardCollection.updateOne(
-        cardId,
-        updatedCard,
+      const createdCard = (await this.cardCollection.findOneAndUpdate(
+        { _id: cardId },
+        {
+          $set: updatedCard,
+        },
       )) as unknown as Card;
       return createdCard;
-    } catch (err) {
-      console.error("Error updating card with card id: ", cardIdString, err);
-      return null;
+    } catch (e) {
+      console.error("Error updating card with card id: ", cardIdString, e);
+      throw e;
     }
   }
 
-  async deleteCard(cardIdString: string): Promise<Card | null> {
+  async deleteCard(cardIdString: string): Promise<Card> {
     const cardId = new ObjectId(cardIdString);
 
     try {
@@ -125,13 +124,13 @@ class MongoDB extends DB {
         cardId,
       )) as unknown as Card;
       return deletedCard;
-    } catch (err) {
-      console.error("Error deleting card with id: ", cardIdString, err);
-      return null;
+    } catch (e) {
+      console.error("Error deleting card with id: ", cardIdString, e);
+      throw e;
     }
   }
 
-  async getUser(userIdString: string): Promise<User | null> {
+  async getUser(userIdString: string): Promise<User> {
     const userId = new ObjectId(userIdString);
 
     try {
@@ -142,16 +141,16 @@ class MongoDB extends DB {
 
       const user = (await this.userCollection.findOne(userId)) as User;
       return user;
-    } catch (err) {
-      console.error("Error finding a user with id: ", userIdString, err);
-      return null;
+    } catch (e) {
+      console.error("Error finding a user with id: ", userIdString, e);
+      throw e;
     }
   }
 
   async addCardToUser(
     userIdString: string,
     cardIdString: string,
-  ): Promise<boolean> {
+  ): Promise<void> {
     const userId = new ObjectId(userIdString);
     const cardId = new ObjectId(cardIdString);
 
@@ -167,16 +166,15 @@ class MongoDB extends DB {
           $push: { createdCards: cardId },
         },
       );
-      return true;
-    } catch (err) {
+    } catch (e) {
       console.error(
         "Error adding card of id: ",
         cardId,
         " to user with with id: ",
         userIdString,
-        err,
+        e,
       );
-      return false;
+      throw e;
     }
   }
 }
