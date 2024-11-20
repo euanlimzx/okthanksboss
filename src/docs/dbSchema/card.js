@@ -1,8 +1,6 @@
-import { ObjectId } from "mongodb";
-
 export const fakeCardData = {
-  _id: new ObjectId(),
-  userId: new ObjectId(),
+  _id: "lanjiao",
+  userId: "lanjiao",
   pages: [
     {
       pageNumber: 1,
