@@ -1,13 +1,4 @@
-import { Card, Page } from "@/types/card";
-import { ObjectId } from "mongodb";
-
-export function createEmptyCard(userIdString: string): Card {
-  return {
-    _id: new ObjectId(),
-    userId: new ObjectId(userIdString),
-    pages: [createEmptyPage()],
-  };
-}
+import { Page } from "@/types/card";
 
 export function createEmptyPage(): Page {
   return {

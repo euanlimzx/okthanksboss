@@ -1,4 +1,4 @@
-import { TextFeature } from "@/types/pageFeatures";
+import { HeaderFeature } from "@/types/pageFeatures";
 import { useEffect, useState } from "react";
 import { HeaderEditorUI } from "./header-editor-ui";
 import { updateCardOnFeatureUpdate } from "@/types/editor";
@@ -7,7 +7,7 @@ export function HeaderEditor({
   feature,
   updateCardOnFeatureUpdate,
 }: {
-  feature: TextFeature;
+  feature: HeaderFeature;
   updateCardOnFeatureUpdate: updateCardOnFeatureUpdate;
 }) {
   const [textAreaValue, setTextAreaValue] = useState("");

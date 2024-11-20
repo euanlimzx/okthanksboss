@@ -4,7 +4,7 @@ import DB from "../services/db/DB";
 import { zodCard, Card } from "@/types/card";
 import { ErrorResponse } from "@/types/apiError";
 import { ZodError } from "zod";
-import { createEmptyCard } from "@/utils/createEmpty";
+import { createEmptyCard } from "@/utils/createEmptyCard";
 import { FindOneAndDeleteOptions, InsertOneOptions } from "mongodb";
 
 // for now I am creating a new instance of the DB everytime, but its reusing the same connection

@@ -24,7 +24,7 @@ export const zodBodyFeature = zodBaseFeature.extend({
 });
 export type BodyFeature = z.infer<typeof zodBodyFeature>;
 
-export const zodAssetType = z.enum(["image", "spotifyPplaylistUrl"]);
+export const zodAssetType = z.enum(["image", "spotifyPlaylistUrl"]);
 export type AssetType = z.infer<typeof zodAssetType>;
 
 export const zodAssetFeature = zodBaseFeature.extend({
@@ -61,7 +61,7 @@ export type CarouSellImageFeature = z.infer<typeof zodCarousellImageFeature>;
 
 // Spotify Playlist URL Feature Schema
 export const zodSpotifyPlaylistUrlFeature = zodAssetFeature.extend({
-  assetType: z.literal(zodAssetType.enum.spotifyPplaylistUrl),
+  assetType: z.literal(zodAssetType.enum.spotifyPlaylistUrl),
   playlistUrl: z.string().url(),
 });
 export type SpotifyPlaylistUrl = z.infer<typeof zodSpotifyPlaylistUrlFeature>;

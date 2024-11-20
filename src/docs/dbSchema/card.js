@@ -1,47 +1,58 @@
 export const fakeCardData = {
-  _id: "192913",
-  ownerId: "12939123",
+  _id: "lanjiao",
+  userId: "lanjiao",
   pages: [
     {
       pageNumber: 1,
       pageFeatures: [
         {
-          featureType: "text",
-          textContent:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          textColor: "#000000",
-          textType: "header",
+          featureType: "header",
+          textContent: "Welcome to the Page!",
+          textColor: "blue",
         },
         {
-          featureType: "image",
-          imageUrls: [
-            "https://example.com/image1.jpg",
-            "https://example.com/image2.jpg",
-          ],
-          imageFeatureType: "carousell",
+          featureType: "body",
+          textContent: "This is the body text content of the page.",
+          textColor: "black",
+        },
+        {
+          featureType: "asset",
+          assetType: "image",
+          imageFeatureType: "single",
+          imageUrl: "https://example.com/image.jpg",
+        },
+        {
+          featureType: "asset",
+          assetType: "spotifyPplaylistUrl",
+          playlistUrl: "https://spotify.com/playlist/1234567890",
         },
       ],
-      pageColor: "#f1a7c3",
+      pageColor: "lightgray",
     },
     {
       pageNumber: 2,
       pageFeatures: [
         {
-          featureType: "text",
-          textContent: "",
-          textColor: "#000000",
-          textType: "header",
+          featureType: "header",
+          textContent: "Second Page",
+          textColor: "green",
         },
         {
-          featureType: "image",
-          imageUrls: [
+          featureType: "body",
+          textContent: "More detailed content for the second page.",
+          textColor: "darkgray",
+        },
+        {
+          featureType: "asset",
+          assetType: "image",
+          imageFeatureType: "carousell",
+          imageUrl: [
             "https://example.com/image1.jpg",
             "https://example.com/image2.jpg",
           ],
-          imageFeatureType: "carousell",
         },
       ],
-      pageColor: "#f1a7c3",
+      pageColor: "white",
     },
   ],
 };
