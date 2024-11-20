@@ -1,7 +1,7 @@
 import { User } from "@/types/user";
 import { Card } from "@/types/card";
 
-abstract class DB<CreateOptions> {
+abstract class DB<CreateOptions, DeleteOptions> {
   abstract getAllCardsForUser(userIdString: string): Promise<Card[]>;
 
   // TODO @Shawn: Not sure if this function would have to change based on if you are getting the card for viewing / editing -> As of now I dont think so
@@ -15,7 +15,10 @@ abstract class DB<CreateOptions> {
   abstract updateCard(cardIdString: string, updatedCard: Card): Promise<Card>;
 
   // returns the deleted card
-  abstract deleteCard(cardIdString: string): Promise<Card>;
+  abstract deleteCard(
+    cardIdString: string,
+    options: DeleteOptions,
+  ): Promise<Card | null>;
 
   abstract getUser(userIdString: string): Promise<User>;
 
@@ -24,6 +27,9 @@ abstract class DB<CreateOptions> {
     userIdString: string,
     newCard: Card,
   ): Promise<Card>;
+
+  // deletes a card and removes it from the user's list of cards. Returns the deleted card
+  abstract deleteCardAndRemoveFromUser(cardIdString: string): Promise<Card>;
 }
 
 export default DB;

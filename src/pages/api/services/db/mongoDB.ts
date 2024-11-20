@@ -6,10 +6,11 @@ import {
   Collection,
   ClientSession,
   InsertOneOptions,
+  FindOneAndDeleteOptions,
 } from "mongodb";
 import DB from "./DB";
 
-class MongoDB extends DB<InsertOneOptions> {
+class MongoDB extends DB<InsertOneOptions, FindOneAndDeleteOptions> {
   client: MongoClient | null = null;
   cardCollection: Collection<Card> | null = null;
   userCollection: Collection<User> | null = null;
@@ -123,7 +124,10 @@ class MongoDB extends DB<InsertOneOptions> {
     }
   }
 
-  async deleteCard(cardIdString: string): Promise<Card> {
+  async deleteCard(
+    cardIdString: string,
+    options: FindOneAndDeleteOptions,
+  ): Promise<Card | null> {
     const cardId = new ObjectId(cardIdString);
 
     try {
@@ -133,9 +137,11 @@ class MongoDB extends DB<InsertOneOptions> {
       }
 
       // addded as unknown here because IDK how to resolve this TS error ew
-      const deletedCard = (await this.cardCollection.deleteOne(
-        cardId,
-      )) as unknown as Card;
+      const deletedCard = await this.cardCollection.findOneAndDelete(
+        { _id: cardId },
+        options,
+      );
+
       return deletedCard;
     } catch (e) {
       console.error("Error deleting card with id: ", cardIdString, e);
@@ -205,6 +211,53 @@ class MongoDB extends DB<InsertOneOptions> {
         userIdString,
         e,
       );
+      throw e;
+    } finally {
+      await this.session!.endSession();
+    }
+  }
+
+  async deleteCardAndRemoveFromUser(cardIdString: string): Promise<Card> {
+    try {
+      await this._connect();
+      if (!this.client || !this.userCollection || !this.cardCollection) {
+        throw new Error("Could not connect to the database");
+      }
+
+      this.session = this.client.startSession();
+      if (!this.session) {
+        throw new Error("Could not establish a DB session");
+      }
+
+      let removedCard = null;
+
+      await this.session.withTransaction(async () => {
+        removedCard = await this.deleteCard(cardIdString, {
+          session: this.session!,
+        });
+
+        if (!removedCard) {
+          throw new Error(`Coult not a card with ID: ${cardIdString}`);
+        }
+
+        console.log(removedCard);
+
+        const updateResult = await this.userCollection?.updateOne(
+          { _id: removedCard.userId },
+          {
+            $pull: { createdCards: new ObjectId(cardIdString) },
+          },
+        );
+        if (!updateResult?.modifiedCount) {
+          throw new Error(
+            `Coult not find a user ${removedCard.userId.toString()} that owns card with ID: ${cardIdString}`,
+          );
+        }
+      });
+
+      return removedCard!;
+    } catch (e) {
+      console.error("Error deleting card with ID: ", cardIdString, e);
       throw e;
     } finally {
       await this.session!.endSession();
