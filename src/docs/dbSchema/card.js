@@ -1,62 +1,60 @@
+import { ObjectId } from "mongodb";
+
 export const fakeCardData = {
-  _id: "192913",
-  ownerId: "12939123",
+  _id: new ObjectId(),
+  userId: new ObjectId(),
   pages: [
     {
       pageNumber: 1,
       pageFeatures: [
         {
           featureType: "header",
-          textContent:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          textColor: "#000000",
-          textType: "header",
+          textContent: "Welcome to the Page!",
+          textColor: "blue",
         },
         {
           featureType: "body",
-          textContent:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          textColor: "#000000",
-          textType: "header",
+          textContent: "This is the body text content of the page.",
+          textColor: "black",
         },
         {
           featureType: "asset",
-          imageUrls: [
-            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
-            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
-          ],
-          imageFeatureType: "carousell",
+          assetType: "image",
+          imageFeatureType: "single",
+          imageUrl: "https://example.com/image.jpg",
+        },
+        {
+          featureType: "asset",
+          assetType: "spotifyPplaylistUrl",
+          playlistUrl: "https://spotify.com/playlist/1234567890",
         },
       ],
-      pageColor: "#f1a7c3",
+      pageColor: "lightgray",
     },
     {
       pageNumber: 2,
       pageFeatures: [
         {
           featureType: "header",
-          textContent:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          textColor: "#000000",
-          textType: "header",
+          textContent: "Second Page",
+          textColor: "green",
         },
         {
           featureType: "body",
-          textContent:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          textColor: "#000000",
-          textType: "header",
+          textContent: "More detailed content for the second page.",
+          textColor: "darkgray",
         },
         {
           featureType: "asset",
-          imageUrls: [
-            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
-            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
-          ],
+          assetType: "image",
           imageFeatureType: "carousell",
+          imageUrl: [
+            "https://example.com/image1.jpg",
+            "https://example.com/image2.jpg",
+          ],
         },
       ],
-      pageColor: "#f1a7c3",
+      pageColor: "white",
     },
   ],
 };
