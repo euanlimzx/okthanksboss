@@ -1,6 +1,6 @@
 import { zodPageFeature } from "./pageFeatures";
-import { ObjectId } from "mongodb";
 import { z } from "zod";
+import { zodMongoDBId } from "./mongodbId";
 
 export const zodPage = z.object({
   pageNumber: z.number(),
@@ -12,14 +12,8 @@ export const zodPage = z.object({
 export type Page = z.infer<typeof zodPage>;
 
 export const zodCard = z.object({
-  _id: z.union([
-    z.instanceof(ObjectId),
-    z.string().transform((idString) => new ObjectId(idString)),
-  ]),
-  userId: z.union([
-    z.instanceof(ObjectId),
-    z.string().transform((idString) => new ObjectId(idString)),
-  ]),
+  _id: zodMongoDBId,
+  userId: zodMongoDBId,
   pages: z.array(zodPage),
 });
 

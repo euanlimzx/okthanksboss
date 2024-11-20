@@ -5,12 +5,12 @@ import { zodCard, Card } from "@/types/card";
 import { ErrorResponse } from "@/types/apiError";
 import { ZodError } from "zod";
 import { createEmptyCard } from "@/utils/createEmpty";
-import { InsertOneOptions } from "mongodb";
+import { FindOneAndDeleteOptions, InsertOneOptions } from "mongodb";
 
 // for now I am creating a new instance of the DB everytime, but its reusing the same connection
 // not sure if this is the best way to be doing this honestly
 
-const db: DB<InsertOneOptions> = new MongoDB();
+const db: DB<InsertOneOptions, FindOneAndDeleteOptions> = new MongoDB();
 
 export default async function handler(
   req: NextApiRequest,
