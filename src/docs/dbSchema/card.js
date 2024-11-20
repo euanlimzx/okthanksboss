@@ -6,17 +6,24 @@ export const fakeCardData = {
       pageNumber: 1,
       pageFeatures: [
         {
-          featureType: "text",
+          featureType: "header",
           textContent:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           textColor: "#000000",
           textType: "header",
         },
         {
-          featureType: "image",
+          featureType: "body",
+          textContent:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          textColor: "#000000",
+          textType: "header",
+        },
+        {
+          featureType: "asset",
           imageUrls: [
-            "https://example.com/image1.jpg",
-            "https://example.com/image2.jpg",
+            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
+            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
           ],
           imageFeatureType: "carousell",
         },
@@ -27,16 +34,24 @@ export const fakeCardData = {
       pageNumber: 2,
       pageFeatures: [
         {
-          featureType: "text",
-          textContent: "",
+          featureType: "header",
+          textContent:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           textColor: "#000000",
           textType: "header",
         },
         {
-          featureType: "image",
+          featureType: "body",
+          textContent:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          textColor: "#000000",
+          textType: "header",
+        },
+        {
+          featureType: "asset",
           imageUrls: [
-            "https://example.com/image1.jpg",
-            "https://example.com/image2.jpg",
+            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
+            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fphotos%2Ftree-sunset-clouds-sky-silhouette-736885%2F&psig=AOvVaw1hFtKmNicI153KZqFs7z0U&ust=1732164604234000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjdpZGO6okDFQAAAAAdAAAAABAE",
           ],
           imageFeatureType: "carousell",
         },

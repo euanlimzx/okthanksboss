@@ -10,16 +10,13 @@ export default function AccordionFeature({
   feature: PageFeature;
   updateCardOnFeatureUpdate: updateCardOnFeatureUpdate;
 }) {
-  if (feature.featureType == zodFeatureType.enum.text) {
+  if (feature.featureType === zodFeatureType.enum.header) {
     return (
       <HeaderEditor
         feature={feature}
         updateCardOnFeatureUpdate={updateCardOnFeatureUpdate}
       />
     );
-  } else if (feature.featureType == zodFeatureType.enum.image) {
-    return <div>image</div>;
-  } else if (feature.featureType == zodFeatureType.enum.spotifyPlaylistUrl) {
-    return <div>spotify</div>;
+    //settle other featuretypes later
   }
 }

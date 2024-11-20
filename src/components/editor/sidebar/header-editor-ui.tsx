@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { TextFeature } from "@/types/pageFeatures";
+import { HeaderFeature } from "@/types/pageFeatures";
 import {
   Dialog,
   DialogTrigger,
@@ -18,7 +18,7 @@ export const HeaderEditorUI = ({
   submitTextArea,
   textAreaValue,
 }: {
-  feature: TextFeature;
+  feature: HeaderFeature;
   handleTextAreaChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   submitTextArea: VoidFunction;
   textAreaValue: string;
