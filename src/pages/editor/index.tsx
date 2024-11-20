@@ -4,6 +4,7 @@ import { Card } from "@/types/card";
 import { useEffect, useState } from "react";
 import { fakeCardData } from "@/docs/dbSchema/card";
 import { updateCardOnPageUpdate } from "@/types/editor";
+import { createEmptyPage } from "@/utils/createEmptyPage";
 
 export default function Index() {
   const [card, setCard] = useState<Card>();
@@ -21,10 +22,7 @@ export default function Index() {
   function newPage() {
     setCard((prevCard) => {
       if (!prevCard) return prevCard; // Handle case where prevCard might be null/undefined.
-      const newPage = {
-        pageNumber: prevCard.pages.length + 1,
-        pageFeatures: [],
-      };
+      const newPage = createEmptyPage();
       // Create a new copy of card with the updated pages array
       return {
         ...prevCard,
